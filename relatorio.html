@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Financeiro - Restaurante</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Barra Lateral -->
+    <div id="sidebar" class="sidebar">
+        <button id="closeButton" class="close-button">×</button>
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="garcom.html"><i class="fas fa-utensils"></i> Área do Garçom</a></li>
+            <li><a href="caixa.html"><i class="fas fa-cash-register"></i> Área do Caixa</a></li>
+            <li><a href="relatorio.html" class="active"><i class="fas fa-chart-line"></i> Relatórios</a></li>
+            <li><a href="estoque.html"><i class="fas fa-boxes"></i> Estoque</a></li>
+            <li><a href="configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
+            <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+        </ul>
+    </div>
+
+    <!-- Botão do Menu -->
+    <button id="menuButton" class="menu-button">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <h1><i class="fas fa-chart-pie"></i> Relatório Financeiro</h1>
+        
+        <div class="relatorio-grid">
+            <!-- Seção de Vendas -->
+            <section class="relatorio-card">
+                <h2><i class="fas fa-money-bill-wave"></i> Vendas</h2>
+                <div class="form-group">
+                    <label for="vendas-dia"><i class="fas fa-calendar-day"></i> Vendas do Dia:</label>
+                    <input type="number" id="vendas-dia" class="input-estilo">
+                </div>
+                <button class="botao" onclick="adicionarVendas()">
+                    <i class="fas fa-plus-circle"></i> Adicionar Vendas
+                </button>
+                <div class="total-box">
+                    <p>Total de Vendas do Mês:</p>
+                    <span id="total-vendas-mes" class="valor-destaque">R$ 0,00</span>
+                </div>
+            </section>
+
+            <!-- Seção de Gastos com Funcionários -->
+            <section class="relatorio-card">
+                <h2><i class="fas fa-users"></i> Gastos com Funcionários</h2>
+                <ul id="lista-funcionarios" class="lista-itens"></ul>
+                <div class="form-group">
+                    <label for="nome-funcionario"><i class="fas fa-user"></i> Nome:</label>
+                    <input type="text" id="nome-funcionario" class="input-estilo">
+                </div>
+                <div class="form-group">
+                    <label for="salario-funcionario"><i class="fas fa-wallet"></i> Salário:</label>
+                    <input type="number" id="salario-funcionario" class="input-estilo">
+                </div>
+                <button class="botao" onclick="adicionarFuncionario()">
+                    <i class="fas fa-user-plus"></i> Adicionar Funcionário
+                </button>
+            </section>
+
+            <!-- Seção de Despesas -->
+            <section class="relatorio-card">
+                <h2><i class="fas fa-receipt"></i> Despesas</h2>
+                <ul id="lista-despesas" class="lista-itens"></ul>
+                <div class="form-group">
+                    <label for="descricao-despesa"><i class="fas fa-align-left"></i> Descrição:</label>
+                    <input type="text" id="descricao-despesa" class="input-estilo">
+                </div>
+                <div class="form-group">
+                    <label for="valor-despesa"><i class="fas fa-dollar-sign"></i> Valor:</label>
+                    <input type="number" id="valor-despesa" class="input-estilo">
+                </div>
+                <button class="botao" onclick="adicionarDespesa()">
+                    <i class="fas fa-plus"></i> Adicionar Despesa
+                </button>
+            </section>
+
+            <!-- Seção de Resumo Financeiro -->
+            <section class="relatorio-card resumo">
+                <h2><i class="fas fa-calculator"></i> Resumo Financeiro</h2>
+                <div class="resumo-item">
+                    <p>Total de Vendas:</p>
+                    <span id="resumo-vendas" class="valor-positivo">R$ 0,00</span>
+                </div>
+                <div class="resumo-item">
+                    <p>Total de Despesas:</p>
+                    <span id="resumo-despesas" class="valor-negativo">R$ 0,00</span>
+                </div>
+                <div class="resumo-item">
+                    <p>Folha de Pagamento:</p>
+                    <span id="resumo-funcionarios" class="valor-negativo">R$ 0,00</span>
+                </div>
+                <div class="resumo-total">
+                    <p>Lucro Total:</p>
+                    <span id="lucro-total" class="valor-destaque">R$ 0,00</span>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

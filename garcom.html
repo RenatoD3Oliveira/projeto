@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garçom</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <!-- Ícones do FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Botão para abrir/fechar a barra lateral -->
+    <button id="menuButton" class="menu-button">☰</button>
+
+    <!-- Barra Lateral -->
+    <div id="sidebar" class="sidebar">
+        <button id="closeButton" class="close-button">×</button>
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="garcom.html"><i class="fas fa-utensils"></i> Área do Garçom</a></li>
+            <li><a href="caixa.html"><i class="fas fa-cash-register"></i> Área do Caixa</a></li>
+            <li><a href="relatorio.html"><i class="fas fa-chart-line"></i> Relatórios</a></li>
+            <li><a href="estoque.html"><i class="fa-solid fa-circle-info"></i> Estoque</a></li>
+            <li><a href="configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
+            <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+        </ul>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="caixatela2">
+        <!-- Botões de Mesas -->
+        <div class="botoes-laterais">
+            <h2><i class="fas fa-table"></i> Mesas</h2>
+            <div class="grid-mesas">
+                <!-- Mesas serão preenchidas dinamicamente pelo JavaScript -->
+            </div>
+        </div>
+
+        <!-- Aba Lateral para Lançar Pedidos -->
+        <div id="abaPedidos" class="aba-pedidos">
+            <button id="fecharAba" class="fechar-aba">×</button>
+            <h2><i class="fas fa-clipboard-list"></i> Pedidos da <span id="mesaSelecionadaTitulo">Nenhuma Mesa Selecionada</span></h2>
+
+            <!-- Filtros de Categoria -->
+            <div class="filtros-categoria">
+                <button class="filtro-botao ativo" data-categoria="todos">Todos</button>
+                <button class="filtro-botao" data-categoria="comida">Comida</button>
+                <button class="filtro-botao" data-categoria="bebida">Bebida</button>
+                <button class="filtro-botao" data-categoria="sobremesa">Sobremesa</button>
+            </div>
+
+            <!-- Barra de Busca -->
+            <div class="barra-busca">
+                <input type="text" id="buscaItem" placeholder="Buscar item..." oninput="filtrarItens()">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <!-- Grade de Itens do Menu -->
+            <div class="grade" id="gradeItens"></div>
+
+            <!-- Lista de Pedidos -->
+            <ul id="listaPedidos"></ul>
+
+            <!-- Total do Pedido -->
+            <p><strong>Total: R$ <span id="totalPedido">0.00</span></strong></p>
+            <button class="botao-finalizar" onclick="finalizarPedido()"><i class="fas fa-check"></i> Finalizar Pedido</button>
+        </div>
+    </div>
+    <script type="module" src="main-garcom.js"></script>
+</body>
+</html>

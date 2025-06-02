@@ -1,0 +1,1921 @@
+/* ==================== ESTILOS PRINCIPAIS ==================== */
+
+/*        */
+/* Garçom */
+/*        */
+
+/* styles.css */
+
+/* Estilos para mesas (NOVA VERSÃO) */
+.mesa-button {
+    padding: 15px;
+    border: 1px solid #dfe4ea; /* Borda cinza clara e sutil para todos */
+    border-radius: 8px;
+    background-color: #ffffff; /* Fundo branco padrão */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Sombra bem sutil */
+    /* Para layout de 2 colunas com gap: */
+    flex: 1 1 calc(50% - 8px); /* (50% da largura - metade do gap do .grid-mesas) */
+    min-width: 150px; /* Mantém uma largura mínima */
+    margin: 0; /* Removido para que o 'gap' do grid-mesas controle o espaçamento */
+}
+
+.mesa-button:hover {
+    border-color: #b8c2cc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Remove estilos de borda e fundo específicos de status/minha-mesa que usavam a borda inteira */
+.mesa-button.disponivel,
+.mesa-button.ocupada,
+.mesa-button.aguardando_pagamento {
+    border-color: #dfe4ea; /* Mantém a borda padrão */
+    background-color: #ffffff; /* Mantém o fundo padrão */
+}
+
+.mesa-button.minha-mesa {
+    background-color: #f0f7ff; /* Fundo azul bem claro para destacar */
+    border-left: 4px solid #007bff; /* Borda lateral azul para indicar que é "minha mesa" */
+    border-top: 1px solid #dfe4ea;
+    border-right: 1px solid #dfe4ea;
+    border-bottom: 1px solid #dfe4ea;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Mantém a sombra sutil */
+}
+
+.mesa-button > i.fas.fa-table { /* Ícone principal da mesa */
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #2c3e50; /* Cor original do ícone da mesa */
+}
+
+.mesa-info {
+    text-align: center;
+    margin: 8px 0;
+    font-size: 0.9em;
+    color: #6c757d; /* Cor base para o texto de informação */
+    width: 100%;
+}
+
+.mesa-info .status-disponivel {
+    color: #28a745; /* Verde para disponível */
+    font-weight: 500;
+}
+.mesa-info .status-ocupada {
+    color: #dc3545; /* Vermelho para ocupada */
+    font-weight: 500;
+}
+.mesa-info .status-aguardando { /* Se você tiver este status */
+    color: #ffc107; /* Amarelo para aguardando pagamento */
+    font-weight: 500;
+}
+
+.mesa-info .garcom-nome {
+    font-size: 0.85em;
+    color: #495057;
+    display: block; /* Para quebrar linha se houver status e garçom */
+    margin-top: 4px;
+}
+
+.mesa-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 8px;
+}
+
+.mesa-action-btn {
+    padding: 5px 10px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #007bff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85em;
+}
+
+.mesa-action-btn i.fas.fa-user-plus { /* Ícone dentro do botão de ação */
+    color: #007bff; /* Cor inicial do ícone */
+    margin: 0;
+    font-size: 1em; /* Ajustado para ser relativo ao font-size do botão */
+}
+
+.mesa-action-btn:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.mesa-action-btn:hover i.fas.fa-user-plus {
+    color: white; /* Cor do ícone no hover */
+}
+
+.grid-mesas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Espaçamento entre os cards */
+    padding: 10px; /* Padding interno do container dos botões de mesa */
+    justify-content: flex-start; /* Ou 'center' se preferir centralizar as mesas */
+}
+
+/* Ajuste no container .botoes-laterais se necessário para a largura */
+.botoes-laterais {
+    background-color: #34495e; /* Fundo escuro da seção */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* A largura de .botoes-laterais (originalmente 250px) precisa ser suficiente
+       para acomodar duas colunas de .mesa-button.
+       Ex: se min-width é 150px e gap é 15px, .botoes-laterais precisa de pelo menos (150*2 + 15) = 315px.
+       Considere usar 'width: auto;' ou um valor maior se estiver fixo. */
+}
+
+.botoes-laterais h2 { /* Estilo para o título "Mesas" */
+    font-size: 22px;
+    color: white;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilos Gerais */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Barra Lateral */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 250px;
+    height: 100%;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.open { left: 0; }
+
+.sidebar h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: white;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #34495e;
+    color: #fff;
+}
+
+/* Botão de abrir/fechar a barra lateral */
+.menu-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.menu-button:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover { color: #e74c3c; }
+
+/* Tela de Login */
+.login-container {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.login-container h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.login-container input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-container button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.mensagem-erro {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none; /* Inicialmente oculta */
+}
+
+/* Tela do Garçom */
+
+.botoes-laterais {
+    background-color: #34495e;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 250px;
+}
+
+.botoes-laterais h2 {
+    font-size: 22px;
+    color: white;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.grid-mesas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.botao {
+    padding: 15px;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 2px solid transparent;
+}
+
+.botao:hover {
+    background-color: #16a085;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    border-color: #148f77;
+}
+
+/* Estilos para a aba de pedidos */
+.aba-pedidos {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: -webkit-fill-available;     
+    background-color: white;
+    border-left: 5px solid #34495e;
+    padding: 20px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.aba-pedidos.open {
+    right: 0;
+}
+
+.aba-pedidos h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Filtros de Categoria */
+.filtros-categoria {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filtro-botao {
+    padding: 10px 15px;
+    background-color: #ecf0f1;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.filtro-botao.ativo {
+    background-color: #1abc9c;
+    color: white;
+}
+
+.filtro-botao:hover {
+    background-color: #d5dbdd;
+    transform: translateY(-2px);
+}
+
+/* Barra de Busca */
+.barra-busca {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.barra-busca input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.barra-busca input:focus {
+    border-color: #1abc9c;
+    outline: none;
+}
+
+.barra-busca i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+/* Estilos para os itens do cardápio */
+.grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.item {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.item h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+.item p {
+    color: #27ae60;
+    font-weight: bold;
+    margin: 5px 0 15px 0;
+}
+
+.item button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.item button:hover {
+    background: #2980b9;
+}
+
+/* Estiliza a barra de rolagem do cardápio */
+.grade::-webkit-scrollbar {
+    width: 6px;
+}
+
+.grade::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.grade::-webkit-scrollbar-thumb {
+    background: #bdc3c7;
+    border-radius: 10px;
+}
+
+.grade::-webkit-scrollbar-thumb:hover {
+    background: #95a5a6;
+}
+
+/* Lista de Pedidos */
+#listaPedidos {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+#listaPedidos li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#listaPedidos li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#listaPedidos li button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#listaPedidos li button:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Total do Pedido */
+#totalPedido {
+    font-size: 20px;
+    font-weight: bold;
+    color: #34495e;
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+    background-color: #ecf0f1;
+    border-radius: 12px;
+}
+
+/* Animações Personalizadas */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.botao:hover {
+    animation: bounce 0.5s ease;
+}
+
+.filtro-botao:hover {
+    animation: bounce 0.5s ease;
+}
+
+.botao-finalizar:hover {
+    animation: bounce 0.5s ease;
+}
+
+/* Estilos para a tela do caixa */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.container h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 32px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Grid de Mesas */
+#listaMesas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Layout responsivo */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Card de Mesa */
+.mesa-caixa {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.mesa-caixa:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.mesa-caixa h2 {
+    font-size: 22px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.garcom-info {
+    font-size: 14px;
+    color: #7f8c8d;
+    font-weight: normal;
+}
+
+.mesa-caixa ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.mesa-caixa li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.mesa-caixa li:hover {
+    background-color: #e9ecef;
+}
+
+.item-nome {
+    font-weight: 500;
+}
+
+.item-preco {
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.mesa-caixa .total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.total .valor {
+    color: #27ae60;
+}
+
+.acoes-mesa {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.botao-finalizar, .botao-imprimir {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.botao-finalizar {
+    background-color: #27ae60;
+    color: white;
+}
+
+.botao-finalizar:hover {
+    background-color: #219a52;
+}
+
+.botao-imprimir {
+    background-color: #3498db;
+    color: white;
+}
+
+.botao-imprimir:hover {
+    background-color: #2980b9;
+}
+
+/* Estilos para itens por categoria */
+.mesa-caixa li[data-categoria="comida"] {
+    border-left: 4px solid #e74c3c;
+}
+
+.mesa-caixa li[data-categoria="bebida"] {
+    border-left: 4px solid #3498db;
+}
+
+.mesa-caixa li[data-categoria="sobremesa"] {
+    border-left: 4px solid #f1c40f;
+}
+
+/* Estilos para as mensagens de feedback */
+.feedback-mensagem {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.5s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feedback-mensagem.sucesso {
+    background-color: #27ae60;
+}
+
+.feedback-mensagem.erro {
+    background-color: #e74c3c;
+}
+
+.feedback-mensagem i {
+    font-size: 18px;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ==================== ESTILOS DO ESTOQUE ==================== */
+/* estoque.css */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+h1, h2 {
+  color: #2c3e50;
+}
+
+.estoque-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.formulario, .lista-estoque {
+  flex: 1;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.btn-salvar {
+  background-color: #27ae60;
+  color: white;
+}
+
+.btn-cancelar {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-remover {
+  background-color: #f39c12;
+  color: white;
+}
+
+.filtros {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+#busca {
+  flex: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #3498db;
+  color: white;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+.acoes button {
+  padding: 5px 10px;
+  margin-right: 5px;
+}
+
+.btn-editar {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-excluir {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.baixo-estoque {
+  background-color: #ffdddd;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 5px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
+}
+
+@media (max-width: 768px) {
+  .estoque-container {
+      flex-direction: column;
+  }
+  
+  .modal-content {
+      width: 90%;
+  }
+}
+/* ==================== ESTILOS GERAIS DO RELATÓRIO ==================== */
+
+.relatorio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.relatorio-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.relatorio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.relatorio-card h2 {
+    color: #2c3e50;
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f1f1f1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilos para formulários e inputs */
+.relatorio-card .form-group {
+    margin-bottom: 15px;
+}
+
+.relatorio-card label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #34495e;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-estilo {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.input-estilo:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Estilos para listas */
+.lista-itens {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.lista-itens li {
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.lista-itens li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilos para os botões */
+.relatorio-card .botao {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.relatorio-card .botao:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Estilos para a seção de resumo */
+.resumo {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.resumo-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.resumo-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    margin-top: 15px;
+    border-top: 2px solid #ddd;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Estilos para valores */
+.valor-destaque {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 18px;
+}
+
+.valor-positivo {
+    color: #27ae60;
+    font-weight: 500;
+}
+
+.valor-negativo {
+    color: #e74c3c;
+    font-weight: 500;
+}
+
+.total-box {
+    background-color: #ecf0f1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.total-box p {
+    margin: 0 0 5px 0;
+    color: #7f8c8d;
+}
+
+/* Barra de rolagem personalizada */
+.lista-itens::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lista-itens::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.lista-itens::-webkit-scrollbar-thumb {
+    background: #bdc3c7;
+    border-radius: 10px;
+}
+
+.lista-itens::-webkit-scrollbar-thumb:hover {
+    background: #95a5a6;
+}
+
+/* ==================== RESPONSIVIDADE ==================== */
+@media (max-width: 768px) {
+    .relatorio-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .relatorio-card {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .input-estilo {
+        padding: 8px 12px;
+    }
+    
+    .relatorio-card .botao {
+        padding: 10px;
+    }
+}
+/* ==================== ESTILOS DE CONFIGURAÇÕES ==================== */
+
+.configuracoes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.config-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.config-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.config-card h2 {
+    color: #2c3e50;
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f1f1f1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.config-card h3 {
+    font-size: 16px;
+    margin: 20px 0 10px 0;
+    color: #34495e;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Estilos para switches */
+.switch-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #27ae60;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Botões de aviso */
+.btn-aviso {
+    background-color: #e74c3c !important;
+}
+
+.btn-aviso:hover {
+    background-color: #c0392b !important;
+}
+
+/* Área de backup */
+.backup-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.info-backup {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.info-backup i {
+    color: #3498db;
+    margin-right: 8px;
+}
+
+/* Modal de confirmação */
+.modal-botoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .configuracoes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .config-card {
+        padding: 15px;
+    }
+}
+
+/* Mensagem quando não há itens */
+.mensagem-sem-itens {
+    text-align: center;
+    padding: 40px;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.mensagem-sem-itens i {
+    font-size: 48px;
+    color: #bdc3c7;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.mensagem-sem-itens p {
+    color: #7f8c8d;
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Estilos para a seção de relatórios */
+.relatorio-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.filtros {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filtros select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: white;
+    flex: 1;
+}
+
+.filtros button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filtros button:hover {
+    background-color: #2980b9;
+}
+
+.relatorio {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.relatorio .total-vendas {
+    font-size: 24px;
+    color: #27ae60;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.relatorio .itens-vendidos {
+    list-style: none;
+    padding: 0;
+}
+
+.relatorio .item-vendido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    background-color: white;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.relatorio .item-vendido:hover {
+    background-color: #e9ecef;
+}
+
+.relatorio .item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.relatorio .item-nome {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.relatorio .item-quantidade {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.relatorio .item-total {
+    font-weight: bold;
+    color: #27ae60;
+}
+
+/* Estilos para gráficos (se implementados) */
+.grafico {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .filtros {
+        flex-direction: column;
+    }
+    
+    .filtros select,
+    .filtros button {
+        width: 100%;
+    }
+    
+    .relatorio .item-vendido {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+}
+
+/* Estilos para pedidos aguardando pagamento */
+.mesa-caixa.aguardando-pagamento {
+    border: 2px solid #f39c12;
+    position: relative;
+}
+
+.status-pagamento {
+    background-color: #f39c12;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+/* Estilos específicos para itens vazios */
+.item-vazio {
+    text-align: center;
+    color: #95a5a6;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    font-style: italic;
+}
+
+/* Estilos para itens de lista no relatório */
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.item-nome {
+    font-weight: 500;
+    color: #2c3e50;
+    flex: 1;
+}
+
+.item-data {
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+.item-valor {
+    font-weight: bold;
+    color: #27ae60;
+    min-width: 100px;
+    text-align: right;
+}
+
+/* Botões de remoção */
+.btn-remover {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-remover:hover {
+    background-color: #c0392b;
+}
+
+/* Estilos para o resumo financeiro */
+.resumo-total {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.resumo-total .valor-positivo {
+    color: #2ecc71;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.resumo-total .valor-negativo {
+    color: #e74c3c;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Animações para feedback visual */
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.lista-itens li {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .item-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .item-data {
+        font-size: 0.8em;
+    }
+
+    .item-valor {
+        min-width: auto;
+    }
+}
+
+/* Estilos para o layout grid do caixa */
+.caixa-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Estilos para a seção de histórico */
+.historico-section {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filtros-historico {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filtros-historico .botao {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: white;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filtros-historico .botao.ativo {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.lista-historico {
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.item-historico {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-historico:hover {
+    background-color: #f8f9fa;
+}
+
+.item-historico .info-pedido {
+    flex: 1;
+}
+
+.item-historico .mesa {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.item-historico .detalhes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.item-historico .detalhes span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.item-historico .detalhes .forma-pagamento {
+    background-color: #f8f9fa;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.item-historico .detalhes .forma-pagamento i {
+    color: #3498db;
+}
+
+/* Cores específicas para cada forma de pagamento */
+.item-historico .detalhes .forma-pagamento[data-tipo="dinheiro"] i {
+    color: #27ae60;
+}
+
+.item-historico .detalhes .forma-pagamento[data-tipo="cartao_credito"] i,
+.item-historico .detalhes .forma-pagamento[data-tipo="cartao_debito"] i {
+    color: #e67e22;
+}
+
+.item-historico .detalhes .forma-pagamento[data-tipo="pix"] i {
+    color: #3498db;
+}
+
+.resumo-historico {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.resumo-historico p {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    font-weight: 500;
+}
+
+.resumo-historico span {
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .caixa-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Estilos para o cabeçalho da área do garçom */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f1f1f1;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.user-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-info i {
+    font-size: 20px;
+    color: #3498db;
+}
+
+.user-info span {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.mesas-section {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.mesas-section h2 {
+    font-size: 22px;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    header h1 {
+        justify-content: center;
+    }
+
+    .user-info {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Estilos para o modal de pagamento */
+#modalFinalizarPagamento .modal-content {
+    max-width: 500px;
+    padding: 0;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+#modalFinalizarPagamento .modal-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#modalFinalizarPagamento .modal-header h2 {
+    margin: 0;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#modalFinalizarPagamento .modal-header .close {
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#modalFinalizarPagamento .modal-header .close:hover {
+    color: #e74c3c;
+}
+
+#modalFinalizarPagamento .modal-body {
+    padding: 20px;
+}
+
+#modalFinalizarPagamento .info-pagamento {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#modalFinalizarPagamento .info-pagamento p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+#modalFinalizarPagamento .valor-destaque {
+    color: #27ae60;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#modalFinalizarPagamento .forma-pagamento {
+    margin-top: 20px;
+}
+
+#modalFinalizarPagamento .forma-pagamento label {
+    display: block;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+#modalFinalizarPagamento #formaPagamento {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+#modalFinalizarPagamento .modal-footer {
+    padding: 20px;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+#modalFinalizarPagamento .botao-finalizar {
+    background-color: #27ae60;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+#modalFinalizarPagamento .botao-finalizar:hover {
+    background-color: #219a52;
+    transform: translateY(-2px);
+}
+
+#modalFinalizarPagamento .botao-cancelar {
+    background-color: #e74c3c;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+#modalFinalizarPagamento .botao-cancelar:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}

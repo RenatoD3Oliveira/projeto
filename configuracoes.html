@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - Restaurante</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Barra Lateral -->
+    <div id="sidebar" class="sidebar">
+        <button id="closeButton" class="close-button">×</button>
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="garcom.html"><i class="fas fa-utensils"></i> Área do Garçom</a></li>
+            <li><a href="caixa.html"><i class="fas fa-cash-register"></i> Área do Caixa</a></li>
+            <li><a href="estoque.html"><i class="fas fa-boxes"></i> Estoque</a></li>
+            <li><a href="relatorio.html"><i class="fas fa-chart-line"></i> Relatórios</a></li>
+            <li><a href="configuracoes.html" class="active"><i class="fas fa-cog"></i> Configurações</a></li>
+            <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+        </ul>
+    </div>
+
+    <!-- Botão do Menu -->
+    <button id="menuButton" class="menu-button">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <h1><i class="fas fa-cog"></i> Configurações do Sistema</h1>
+        
+        <div class="configuracoes-grid">
+            <!-- Configurações Gerais -->
+            <section class="config-card">
+                <h2><i class="fas fa-sliders-h"></i> Configurações Gerais</h2>
+                <form id="formConfigGerais">
+                    <div class="form-group">
+                        <label for="nomeRestaurante"><i class="fas fa-store"></i> Nome do Restaurante:</label>
+                        <input type="text" id="nomeRestaurante" class="input-estilo">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="horarioFuncionamento"><i class="fas fa-clock"></i> Horário de Funcionamento:</label>
+                        <input type="text" id="horarioFuncionamento" class="input-estilo" placeholder="Ex: 08:00 - 22:00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="taxaServico"><i class="fas fa-percentage"></i> Taxa de Serviço (%):</label>
+                        <input type="number" id="taxaServico" class="input-estilo" min="0" max="20" step="0.5">
+                    </div>
+                    
+                    <button type="submit" class="botao">
+                        <i class="fas fa-save"></i> Salvar Configurações
+                    </button>
+                </form>
+            </section>
+
+            <!-- Configurações de Usuários -->
+            <section class="config-card">
+                <h2><i class="fas fa-users-cog"></i> Gerenciar Usuários</h2>
+                <div class="form-group">
+                    <label for="novoUsuario"><i class="fas fa-user-plus"></i> Novo Usuário:</label>
+                    <input type="text" id="novoUsuario" class="input-estilo" placeholder="Nome de usuário">
+                </div>
+                
+                <div class="form-group">
+                    <label for="novaSenha"><i class="fas fa-lock"></i> Senha:</label>
+                    <input type="password" id="novaSenha" class="input-estilo">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tipoUsuario"><i class="fas fa-user-tag"></i> Tipo de Acesso:</label>
+                    <select id="tipoUsuario" class="input-estilo">
+                        <option value="garcom">Garçom</option>
+                        <option value="caixa">Caixa</option>
+                        <option value="gerente">Gerente</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+                
+                <button class="botao" id="btnAdicionarUsuario">
+                    <i class="fas fa-plus-circle"></i> Adicionar Usuário
+                </button>
+                
+                <h3><i class="fas fa-list"></i> Usuários Cadastrados</h3>
+                <ul id="listaUsuarios" class="lista-itens">
+                    <!-- Usuários serão carregados aqui -->
+                </ul>
+            </section>
+
+            <!-- Backup e Restauração -->
+            <section class="config-card">
+                <h2><i class="fas fa-database"></i> Backup do Sistema</h2>
+                
+                <div class="backup-options">
+                    <button class="botao" id="btnGerarBackup">
+                        <i class="fas fa-file-export"></i> Gerar Backup
+                    </button>
+                    
+                    <div class="form-group">
+                        <label for="arquivoBackup"><i class="fas fa-file-import"></i> Restaurar Backup:</label>
+                        <input type="file" id="arquivoBackup" class="input-estilo" accept=".json">
+                    </div>
+                    
+                    <button class="botao btn-aviso" id="btnRestaurarBackup">
+                        <i class="fas fa-history"></i> Restaurar Dados
+                    </button>
+                </div>
+                
+                <div class="info-backup">
+                    <p><i class="fas fa-info-circle"></i> Último backup: <span id="dataUltimoBackup">Nenhum backup realizado</span></p>
+                </div>
+            </section>
+
+            <!-- Configurações Avançadas -->
+            <section class="config-card">
+                <h2><i class="fas fa-tools"></i> Configurações Avançadas</h2>
+                
+                <div class="form-group switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="modoManutencao">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Modo Manutenção</span>
+                </div>
+                
+                <div class="form-group switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="notificacoes">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Ativar Notificações</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="intervaloBackup"><i class="fas fa-sync-alt"></i> Intervalo de Backup Automático:</label>
+                    <select id="intervaloBackup" class="input-estilo">
+                        <option value="0">Desativado</option>
+                        <option value="1">Diariamente</option>
+                        <option value="7">Semanalmente</option>
+                        <option value="30">Mensalmente</option>
+                    </select>
+                </div>
+                
+                <button class="botao btn-aviso" id="btnResetarSistema">
+                    <i class="fas fa-trash-restore"></i> Restaurar Padrões
+                </button>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div id="modalConfirmacao" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitulo"></h2>
+            <p id="modalMensagem"></p>
+            <div class="modal-botoes">
+                <button id="modalConfirmar" class="botao btn-aviso">Confirmar</button>
+                <button id="modalCancelar" class="botao">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
