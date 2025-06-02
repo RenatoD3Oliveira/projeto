@@ -4,82 +4,36 @@
 /* Garçom */
 /*        */
 
-/* styles.css */
-
-/* Estilos para mesas (NOVA VERSÃO) */
+/* Estilos para mesas */
 .mesa-button {
     padding: 15px;
-    border: 1px solid #dfe4ea; /* Borda cinza clara e sutil para todos */
+    margin: 10px;
+    border: 2px solid #ddd;
     border-radius: 8px;
-    background-color: #ffffff; /* Fundo branco padrão */
+    background-color: #fff;
     cursor: pointer;
     transition: all 0.3s ease;
+    width: calc(33.33% - 20px);
+    min-width: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
     position: relative;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Sombra bem sutil */
-    /* Para layout de 2 colunas com gap: */
-    flex: 1 1 calc(50% - 8px); /* (50% da largura - metade do gap do .grid-mesas) */
-    min-width: 150px; /* Mantém uma largura mínima */
-    margin: 0; /* Removido para que o 'gap' do grid-mesas controle o espaçamento */
 }
 
-.mesa-button:hover {
-    border-color: #b8c2cc;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* Remove estilos de borda e fundo específicos de status/minha-mesa que usavam a borda inteira */
-.mesa-button.disponivel,
-.mesa-button.ocupada,
-.mesa-button.aguardando_pagamento {
-    border-color: #dfe4ea; /* Mantém a borda padrão */
-    background-color: #ffffff; /* Mantém o fundo padrão */
-}
-
-.mesa-button.minha-mesa {
-    background-color: #f0f7ff; /* Fundo azul bem claro para destacar */
-    border-left: 4px solid #007bff; /* Borda lateral azul para indicar que é "minha mesa" */
-    border-top: 1px solid #dfe4ea;
-    border-right: 1px solid #dfe4ea;
-    border-bottom: 1px solid #dfe4ea;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Mantém a sombra sutil */
-}
-
-.mesa-button > i.fas.fa-table { /* Ícone principal da mesa */
+.mesa-button i {
     font-size: 24px;
     margin-bottom: 8px;
-    color: #2c3e50; /* Cor original do ícone da mesa */
+    color: #2c3e50;
 }
 
 .mesa-info {
     text-align: center;
     margin: 8px 0;
     font-size: 0.9em;
-    color: #6c757d; /* Cor base para o texto de informação */
+    color: #666;
     width: 100%;
-}
-
-.mesa-info .status-disponivel {
-    color: #28a745; /* Verde para disponível */
-    font-weight: 500;
-}
-.mesa-info .status-ocupada {
-    color: #dc3545; /* Vermelho para ocupada */
-    font-weight: 500;
-}
-.mesa-info .status-aguardando { /* Se você tiver este status */
-    color: #ffc107; /* Amarelo para aguardando pagamento */
-    font-weight: 500;
-}
-
-.mesa-info .garcom-nome {
-    font-size: 0.85em;
-    color: #495057;
-    display: block; /* Para quebrar linha se houver status e garçom */
-    margin-top: 4px;
 }
 
 .mesa-actions {
@@ -91,62 +45,86 @@
 }
 
 .mesa-action-btn {
-    padding: 5px 10px;
-    border: 1px solid #007bff;
+    padding: 6px 12px;
+    border: none;
     border-radius: 4px;
-    background-color: transparent;
-    color: #007bff;
+    background-color: #3498db;
+    color: white;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 0.85em;
+    font-size: 0.9em;
 }
 
-.mesa-action-btn i.fas.fa-user-plus { /* Ícone dentro do botão de ação */
-    color: #007bff; /* Cor inicial do ícone */
+.mesa-action-btn i {
+    font-size: 14px;
     margin: 0;
-    font-size: 1em; /* Ajustado para ser relativo ao font-size do botão */
-}
-
-.mesa-action-btn:hover {
-    background-color: #007bff;
     color: white;
 }
 
-.mesa-action-btn:hover i.fas.fa-user-plus {
-    color: white; /* Cor do ícone no hover */
+.mesa-button.disponivel {
+    border-color: #2ecc71;
+    background-color: #f8fff9;
+}
+
+.mesa-button.ocupada {
+    border-color: #e74c3c;
+    background-color: #fff8f8;
+}
+
+.mesa-button.minha-mesa {
+    border-color: #3498db;
+    background-color: #f7fbff;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+}
+
+.mesa-button.aguardando_pagamento {
+    border-color: #f1c40f;
+    background-color: #fffdf4;
+}
+
+.mesa-button.aguardando_pagamento i {
+    color: #f1c40f;
+}
+
+.mesa-button.aguardando_pagamento::after {
+    content: "Aguardando Pagamento";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #f1c40f;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: bold;
+}
+
+.mesa-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mesa-action-btn:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
 }
 
 .grid-mesas {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px; /* Espaçamento entre os cards */
-    padding: 10px; /* Padding interno do container dos botões de mesa */
-    justify-content: flex-start; /* Ou 'center' se preferir centralizar as mesas */
-}
-
-/* Ajuste no container .botoes-laterais se necessário para a largura */
-.botoes-laterais {
-    background-color: #34495e; /* Fundo escuro da seção */
+    gap: 15px;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    /* A largura de .botoes-laterais (originalmente 250px) precisa ser suficiente
-       para acomodar duas colunas de .mesa-button.
-       Ex: se min-width é 150px e gap é 15px, .botoes-laterais precisa de pelo menos (150*2 + 15) = 315px.
-       Considere usar 'width: auto;' ou um valor maior se estiver fixo. */
+    justify-content: center;
 }
 
-.botoes-laterais h2 { /* Estilo para o título "Mesas" */
-    font-size: 22px;
-    color: white;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+/*        */
+/*  END   */
+/*        */
+
+
 
 /* Estilos Gerais */
 body {
@@ -316,7 +294,7 @@ body {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 250px;
+    width: 400px;
 }
 
 .botoes-laterais h2 {
@@ -994,8 +972,8 @@ tr:hover {
 }
 
 .relatorio-card h2 {
-    color: #2c3e50;
     font-size: 20px;
+    color: #2c3e50;
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 2px solid #f1f1f1;
@@ -1918,4 +1896,361 @@ header h1 {
 #modalFinalizarPagamento .botao-cancelar:hover {
     background-color: #c0392b;
     transform: translateY(-2px);
+}
+
+.secao-cardapio {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--borda-cor);
+}
+
+.secao-cardapio h2 {
+    margin-bottom: 1.5rem;
+    color: var(--texto-cor);
+}
+
+.secao-cardapio form {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.lista-items {
+    background: var(--fundo-secundario);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.lista-items h3 {
+    margin-bottom: 1rem;
+    color: var(--texto-cor);
+}
+
+.item-cardapio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+    background: var(--fundo-principal);
+    border-radius: 4px;
+    border: 1px solid var(--borda-cor);
+}
+
+.item-cardapio .item-info {
+    flex: 1;
+}
+
+.item-cardapio .item-nome {
+    font-weight: bold;
+    color: var(--texto-cor);
+}
+
+.item-cardapio .item-preco {
+    color: var(--destaque-cor);
+    margin-left: 1rem;
+}
+
+.item-cardapio .item-categoria {
+    font-size: 0.8rem;
+    color: var(--texto-secundario);
+    background: var(--fundo-secundario);
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    margin-left: 0.5rem;
+}
+
+.item-cardapio .btn-remover {
+    background: var(--erro-cor);
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+.item-cardapio .btn-remover:hover {
+    background: var(--erro-hover);
+}
+
+/* Estilos para o cardápio online */
+.categoria-section {
+    margin-bottom: 2rem;
+}
+
+.categoria-section h2 {
+    color: var(--destaque-cor);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--destaque-cor);
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.cardapio-item {
+    background: var(--fundo-secundario);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.cardapio-item:hover {
+    transform: translateY(-2px);
+}
+
+.cardapio-item h3 {
+    color: var(--texto-cor);
+    margin-bottom: 0.5rem;
+}
+
+.cardapio-item p {
+    color: var(--texto-secundario);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.cardapio-item .preco {
+    display: block;
+    color: var(--destaque-cor);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* ==================== CARDÁPIO ONLINE ==================== */
+
+.cardapio-section {
+    padding: 2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.cardapio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.cardapio-header h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.cardapio-status {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: #f5f5f5;
+}
+
+.filtros-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.search-box {
+    flex: 1;
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.filter-box select {
+    padding: 0.8rem 2rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.categoria-section {
+    margin-bottom: 3rem;
+}
+
+.categoria-section h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.cardapio-item {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.cardapio-item:hover {
+    transform: translateY(-5px);
+}
+
+.cardapio-item.destaque {
+    border: 2px solid #ffd700;
+}
+
+.item-imagem {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.item-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.cardapio-item:hover .item-imagem img {
+    transform: scale(1.1);
+}
+
+.badge-destaque,
+.badge-vegetariano {
+    position: absolute;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    color: #fff;
+    z-index: 1;
+}
+
+.badge-destaque {
+    background-color: #ffd700;
+    top: 1rem;
+    right: 1rem;
+}
+
+.badge-vegetariano {
+    background-color: #4caf50;
+    top: 1rem;
+    left: 1rem;
+}
+
+.item-info {
+    padding: 1.5rem;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.item-nome {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.item-preco {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #4caf50;
+}
+
+.item-categoria {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.item-descricao {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.estrelas {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.estrelas i {
+    color: #ffd700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.estrelas i:hover {
+    transform: scale(1.2);
+}
+
+.num-avaliacoes {
+    font-size: 0.8rem;
+    color: #666;
+    margin-left: 0.5rem;
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cardapio-item {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .filtros-container {
+        flex-direction: column;
+    }
+    
+    .items-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cardapio-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
 }

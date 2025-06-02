@@ -18,6 +18,7 @@
             <li><a href="relatorio.html" class="active"><i class="fas fa-chart-line"></i> Relatórios</a></li>
             <li><a href="estoque.html"><i class="fas fa-boxes"></i> Estoque</a></li>
             <li><a href="configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
+            <li><a href="usuario.html"><i class="fa-solid fa-users"></i> Usuários</a></li>
             <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
         </ul>
     </div>
@@ -36,16 +37,28 @@
             <section class="relatorio-card">
                 <h2><i class="fas fa-money-bill-wave"></i> Vendas</h2>
                 <div class="form-group">
-                    <label for="vendas-dia"><i class="fas fa-calendar-day"></i> Vendas do Dia:</label>
-                    <input type="number" id="vendas-dia" class="input-estilo">
+                    <section class="historico-section">
+                        <h2><i class="fas fa-history"></i> Histórico do Dia</h2>
+                        <div class="filtros-historico">
+                            <button class="botao ativo" data-periodo="hoje" onclick="carregarHistorico(periodo = 'hoje')" >Hoje</button>
+                            <button class="botao" data-periodo="ontem" onclick="carregarHistorico(periodo = 'ontem')">Ontem</button>
+                            <button class="botao" data-periodo="semana" onclick="carregarHistorico(periodo = 'semana')">Últimos 7 dias</button>
+                            <button class="botao" data-periodo="mes" onclick="carregarHistorico(periodo = 'mes')">Mês</button>
+                        </div>
+                        <div id="listaHistorico" class="lista-historico" >
+                            <!-- O histórico será carregado dinamicamente aqui -->
+                        </div>
+                        <div class="resumo-historico">
+                            <p>Total do Período: <span id="totalPeriodo">R$ 0,00</span></p>
+                            <p>Quantidade de Pedidos: <span id="qtdPedidos">0</span></p>
+                        </div>
+                        <div class="total-box">
+                            <p>Total de Vendas do Mês:</p>
+                            <span id="total-vendas-mes" class="valor-destaque">R$ 0,00</span>
+                        </div>
+                    </section>
                 </div>
-                <button class="botao" onclick="adicionarVendas()">
-                    <i class="fas fa-plus-circle"></i> Adicionar Vendas
-                </button>
-                <div class="total-box">
-                    <p>Total de Vendas do Mês:</p>
-                    <span id="total-vendas-mes" class="valor-destaque">R$ 0,00</span>
-                </div>
+                
             </section>
 
             <!-- Seção de Gastos com Funcionários -->

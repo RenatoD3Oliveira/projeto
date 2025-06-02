@@ -18,6 +18,7 @@
             <li><a href="estoque.html"><i class="fas fa-boxes"></i> Estoque</a></li>
             <li><a href="relatorio.html"><i class="fas fa-chart-line"></i> Relatórios</a></li>
             <li><a href="configuracoes.html" class="active"><i class="fas fa-cog"></i> Configurações</a></li>
+            <li><a href="usuario.html"><i class="fa-solid fa-users"></i> Usuários</a></li>
             <li><a href="index.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
         </ul>
     </div>
@@ -147,9 +148,48 @@
                 <button class="botao btn-aviso" id="btnResetarSistema">
                     <i class="fas fa-trash-restore"></i> Restaurar Padrões
                 </button>
+
+                      <!-- Gerenciamento de Itens do Cardápio -->
+                <div class="secao-cardapio">
+                    <h2><i class="fas fa-utensils"></i> Gerenciar Cardápio</h2>
+                    
+                    <form id="formItem" class="form-group">
+                        <input type="text" id="nomeItem" class="input-estilo" placeholder="Nome do Item" required>
+                        <input type="text" id="precoItem" class="input-estilo" placeholder="Preço (R$)" required>
+                        <input type="url" id="imagemItem" class="input-estilo" placeholder="URL da Imagem do Item" required>
+                        <textarea id="descricaoItem" class="input-estilo" placeholder="Descrição do Item" required></textarea>
+                        <select id="categoriaItem" class="input-estilo" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="comidas">Comidas</option>
+                            <option value="bebidas">Bebidas</option>
+                            <option value="sobremesas">Sobremesas</option>
+                        </select>
+                        <div class="tags-container">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="destaque" name="destaque">
+                                <span class="checkmark"></span>
+                                Item em Destaque
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="vegetariano" name="vegetariano">
+                                <span class="checkmark"></span>
+                                Opção Vegetariana
+                            </label>
+                        </div>
+                        <button type="submit" class="botao">
+                            <i class="fas fa-plus"></i> Adicionar Item
+                        </button>
+                    </form>
+
+                    <div class="lista-items">
+                        <h3>Itens do Cardápio</h3>
+                        <div id="listaItensCardapio"></div>
+                    </div>
+                </div>
             </section>
         </div>
     </div>
+    
 
     <!-- Modal de Confirmação -->
     <div id="modalConfirmacao" class="modal">
